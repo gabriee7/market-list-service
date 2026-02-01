@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes';
 import { HttpError } from '#errors/index.js';
 
 export default async function authMiddleware(req, res, next) {
