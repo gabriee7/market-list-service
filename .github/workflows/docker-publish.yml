@@ -1,0 +1,24 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+
+jobs:
+  publish-docker:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    uses: HiagoScierry/simple-workflow-nodejs-boilerplate/.github/workflows/docker-publish.yml@main
+    with:
+      image-name: >-
+        ${{ 
+          github.event_name == 'workflow_dispatch' 
+        && format('{0}:latest', github.repository) 
+        || format('{0}:{1}', github.repository, github.ref_name) 
+        }}
+      build-context: .
+    secrets:
+      dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+      dockerhub-password: ${{ secrets.DOCKERHUB_PASSWORD }}

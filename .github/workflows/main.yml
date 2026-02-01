@@ -1,0 +1,13 @@
+name: Docker Publish
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    uses: gabriee7/simple-workflow-nodejs-boilerplate/.github/workflows/docker-publish.yml@fix/dynamic-docker-namespace
+    with:
+      image-name: market-list-service
+    secrets:
+      dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+      dockerhub-password: ${{ secrets.DOCKERHUB_PASSWORD }}

@@ -1,0 +1,74 @@
+{
+  "name": "market-user-service-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest tests",
+    "lint": "eslint \"src/**\" \"tests/**\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "http-status-codes": "^2.3.0",
+    "jest": "^30.2.0",
+    "joi": "^18.0.2",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.3.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^9.39.2",
+    "eslint-plugin-import": "^2.32.0",
+    "nodemon": "^3.1.11",
+    "supertest": "^7.2.2",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.0"
+  },
+  "imports": {
+    "#controllers/*": "./src/controllers/*",
+    "#services/*": "./src/services/*",
+    "#repositories/*": "./src/repositories/*",
+    "#routes/*": "./src/routes/*",
+    "#middlewares/*": "./src/middlewares/*",
+    "#dtos/*": "./src/dtos/*",
+    "#errors/*": "./src/errors/*",
+    "#config/*": "./src/config/*",
+    "#docs/*": "./src/docs/*"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,mjs}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "tests/**/*.{js,jsx,mjs}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^#controllers/(.*)$": "<rootDir>/src/controllers/$1",
+      "^#services/(.*)$": "<rootDir>/src/services/$1",
+      "^#repositories/(.*)$": "<rootDir>/src/repositories/$1",
+      "^#routes/(.*)$": "<rootDir>/src/routes/$1",
+      "^#middlewares/(.*)$": "<rootDir>/src/middlewares/$1",
+      "^#dtos/(.*)$": "<rootDir>/src/dtos/$1",
+      "^#errors/(.*)$": "<rootDir>/src/errors/$1",
+      "^#config/(.*)$": "<rootDir>/src/config/$1",
+      "^#docs/(.*)$": "<rootDir>/src/docs/$1"
+    }
+  }
+}
