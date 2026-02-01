@@ -6,7 +6,7 @@ Microserviço Node.js (Express) para gerenciar listas de compras e itens.
 Principais responsabilidades:
 - CRUD de listas e itens
 - Proteção de rotas via verificação de JWT delegada ao `auth` microservice
-- Repositórios e serviços com injeção de dependência (POO)
+- Repositórios e serviços
 - Documentação OpenAPI/Swagger
 
 Rodar localmente
