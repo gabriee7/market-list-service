@@ -8,15 +8,15 @@ export default async function authMiddleware(req, res, next) {
   const authServiceBase = process.env.AUTH_SERVICE_URL;
   if (!authServiceBase)
     throw new HttpError(
-      `AUTH_SERVICE_URL not configured; token verification must be performed by the auth microservice`,
+      'AUTH_SERVICE_URL not configured; token verification must be performed by the auth microservice',
       500
     );
-  const verifyPath = process.env.AUTH_VERIFY_PATH || '/api/auth/verify';
+  const verifyPath = '/api/auth/verify';
   let verifyUrl;
   try {
     const baseUrl = new URL(authServiceBase);
     verifyUrl = new URL(verifyPath, baseUrl).toString();
-  } catch (e) {
+  } catch {
     throw new HttpError('Invalid AUTH_SERVICE_URL configured', StatusCodes.INTERNAL_SERVER_ERROR);
   }
 
