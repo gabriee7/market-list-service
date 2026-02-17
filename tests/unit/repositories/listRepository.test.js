@@ -19,22 +19,22 @@ describe('ListRepository', () => {
   it('createList inserts a row and returns object', async () => {
     // Arrange
     mockExecute.mockResolvedValue([{}, undefined]);
-    const payload = { id: 'id-1', user_id: 'user-1', name: 'Minha lista' };
+    const payload = { id: 'id-1', user_id: 'user-1', name: 'Minha lista', has_price: 0 };
     // Action
     const result = await repo.createList(payload);
     // Assert
-    expect(mockExecute).toHaveBeenCalledWith(expect.any(String), [payload.id, payload.user_id, payload.name]);
+    expect(mockExecute).toHaveBeenCalledWith(expect.any(String), [payload.id, payload.user_id, payload.name, payload.has_price]);
     expect(result).toEqual(payload);
   });
 
   it('addItem inserts item and returns item', async () => {
     // Arrange
     mockExecute.mockResolvedValue([{}, undefined]);
-    const item = { id: 'item-1', list_id: 'id-1', product_name: 'Arroz', quantity: 2, unit_price: 10 };
+    const item = { id: 'item-1', list_id: 'id-1', product_name: 'Arroz', quantity: 2, unit_price: 10, checked: 0 };
     // Action
     const result = await repo.addItem(item);
     // Assert
-    expect(mockExecute).toHaveBeenCalledWith(expect.any(String), [item.id, item.list_id, item.product_name, item.quantity, item.unit_price]);
+    expect(mockExecute).toHaveBeenCalledWith(expect.any(String), [item.id, item.list_id, item.product_name, item.quantity, item.unit_price, item.checked]);
     expect(result).toEqual(item);
   });
 
@@ -65,8 +65,8 @@ describe('ListRepository', () => {
     // Action
     const result = await repo.updateList({ id: 'l1', name: 'Novo' });
     // Assert
-    expect(mockExecute).toHaveBeenCalledWith(expect.any(String), ['Novo', 'l1']);
-    expect(result).toEqual({ id: 'l1', name: 'Novo' });
+    expect(mockExecute).toHaveBeenCalledWith(expect.any(String), ['Novo', 0, 'l1']);
+    expect(result).toEqual({ id: 'l1', name: 'Novo', has_price: 0 });
   });
 
   it('deleteList returns boolean based on affectedRows', async () => {
