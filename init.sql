@@ -1,4 +1,3 @@
--- Ensure a minimal users table exists so foreign keys can be created
 CREATE TABLE IF NOT EXISTS users (
   id CHAR(36) PRIMARY KEY,
   name VARCHAR(255),
@@ -16,6 +15,12 @@ CREATE TABLE IF NOT EXISTS shopping_lists (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS categories (
+  id CHAR(36) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS items (
   id CHAR(36) PRIMARY KEY,
   list_id CHAR(36) NOT NULL,
@@ -23,5 +28,8 @@ CREATE TABLE IF NOT EXISTS items (
   quantity INT NOT NULL DEFAULT 1,
   unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   checked TINYINT(1) NOT NULL DEFAULT 0,
-  FOREIGN KEY (list_id) REFERENCES shopping_lists(id) ON DELETE CASCADE
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  category_id CHAR(36) DEFAULT NULL,
+  FOREIGN KEY (list_id) REFERENCES shopping_lists(id) ON DELETE CASCADE,
+  FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
 );

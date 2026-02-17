@@ -1,5 +1,6 @@
 import schemas from './components/schemas.js';
 import { listPaths } from './views/listPaths.js';
+import { categoryPaths } from './views/categoryPaths.js';
 
 const openapi = {
   openapi: '3.0.0',
@@ -18,7 +19,7 @@ const openapi = {
       }
     }
   },
-  paths: { ...listPaths }
+  paths: { ...listPaths, ...categoryPaths }
 };
 
 export default openapi;

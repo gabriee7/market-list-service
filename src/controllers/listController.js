@@ -17,8 +17,8 @@ const listController = {
     try {
       const userId = req.user && req.user.id;
       const { id: listId } = req.params;
-      const { productName, quantity, unitPrice, checked } = req.body;
-      const item = await listService.addItem({ userId, listId, product_name: productName, quantity, unit_price: unitPrice, checked });
+      const { productName, quantity, unitPrice, checked, categoryId } = req.body;
+      const item = await listService.addItem({ userId, listId, product_name: productName, quantity, unit_price: unitPrice, checked, category_id: categoryId });
       return res.status(201).json(item);
     } catch (err) {
       next(err);
@@ -41,8 +41,8 @@ const listController = {
     try {
       const userId = req.user && req.user.id;
       const { id: listId, itemId } = req.params;
-      const { productName, quantity, unitPrice, checked } = req.body;
-      const item = await listService.updateItem({ userId, listId, itemId, product_name: productName, quantity, unit_price: unitPrice, checked });
+      const { productName, quantity, unitPrice, checked, categoryId } = req.body;
+      const item = await listService.updateItem({ userId, listId, itemId, product_name: productName, quantity, unit_price: unitPrice, checked, category_id: categoryId });
       return res.status(200).json(item);
     } catch (err) {
       next(err);

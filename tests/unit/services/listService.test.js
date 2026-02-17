@@ -30,12 +30,14 @@ describe('ListService (unit)', () => {
   it('addItem returns item with subtotal when owner', async () => {
     // Arrange
     mockRepo.getListById.mockResolvedValue({ id: 'l1', user_id: 'u1' });
-    mockRepo.addItem.mockResolvedValue({ id: 'it1', list_id: 'l1', product_name: 'P', quantity: 2, unit_price: 5 });
+    mockRepo.addItem.mockResolvedValue(undefined);
+    mockRepo.getItemById.mockResolvedValue({ id: 'it1', list_id: 'l1', product_name: 'P', quantity: 2, unit_price: 5, checked: 0, category_id: null, category_name: null, created_at: null });
     // Action
     const result = await svc.addItem({ userId: 'u1', listId: 'l1', product_name: 'P', quantity: 2, unit_price: 5 });
     // Assert
     expect(mockRepo.getListById).toHaveBeenCalledWith('l1');
     expect(mockRepo.addItem).toHaveBeenCalledWith(expect.objectContaining({ id: expect.any(String), list_id: 'l1' }));
+    expect(mockRepo.getItemById).toHaveBeenCalledWith(expect.any(String));
     expect(result).toHaveProperty('subtotal', 10);
   });
 
@@ -94,6 +96,7 @@ function makeSut(overrides = {}) {
     createList: jest.fn(),
     getListById: jest.fn(),
     addItem: jest.fn(),
+    getItemById: jest.fn(),
     getListsByUserId: jest.fn(),
     updateList: jest.fn(),
     deleteList: jest.fn(),

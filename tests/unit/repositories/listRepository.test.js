@@ -30,11 +30,11 @@ describe('ListRepository', () => {
   it('addItem inserts item and returns item', async () => {
     // Arrange
     mockExecute.mockResolvedValue([{}, undefined]);
-    const item = { id: 'item-1', list_id: 'id-1', product_name: 'Arroz', quantity: 2, unit_price: 10, checked: 0 };
+    const item = { id: 'item-1', list_id: 'id-1', product_name: 'Arroz', quantity: 2, unit_price: 10, checked: 0, category_id: null };
     // Action
     const result = await repo.addItem(item);
     // Assert
-    expect(mockExecute).toHaveBeenCalledWith(expect.any(String), [item.id, item.list_id, item.product_name, item.quantity, item.unit_price, item.checked]);
+    expect(mockExecute).toHaveBeenCalledWith(expect.any(String), [item.id, item.list_id, item.product_name, item.quantity, item.unit_price, item.checked, item.category_id]);
     expect(result).toEqual(item);
   });
 

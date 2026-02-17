@@ -14,7 +14,7 @@ export class ListService {
     return result;
   }
 
-  async addItem({ userId, listId, product_name, quantity, unit_price, checked }) {
+  async addItem({ userId, listId, product_name, quantity, unit_price, checked, category_id }) {
     const list = await this.repo.getListById(listId);
     if (!list) throw new NotFoundException('List not found');
     if (list.user_id !== userId) 
@@ -22,11 +22,12 @@ export class ListService {
     const id = uuidv4();
     const q = parseInt(quantity, 10) || 0;
     const price = unit_price !== undefined ? parseFloat(unit_price) : 0;
-    const item = await this.repo.addItem({ id, list_id: listId, product_name, quantity: q, unit_price: price, checked });
-    return { id: item.id, productName: item.product_name, quantity: q, unitPrice: price, subtotal: Number((q * price).toFixed(2)), checked: !!item.checked };
+    await this.repo.addItem({ id, list_id: listId, product_name, quantity: q, unit_price: price, checked, category_id });
+    const item = await this.repo.getItemById(id);
+    return { id: item.id, productName: item.product_name, quantity: q, unitPrice: price, subtotal: Number((q * price).toFixed(2)), checked: !!item.checked, categoryId: item.category_id || null, categoryName: item.category_name || null, createdAt: item.created_at || null };
   }
 
-  async updateItem({ userId, listId, itemId, product_name, quantity, unit_price, checked }) {
+  async updateItem({ userId, listId, itemId, product_name, quantity, unit_price, checked, category_id }) {
     const list = await this.repo.getListById(listId);
     if (!list) throw new NotFoundException('List not found');
     if (list.user_id !== userId)
@@ -40,9 +41,10 @@ export class ListService {
     const price = unit_price !== undefined ? parseFloat(unit_price) : Number(existing.unit_price || 0);
     const checkedVal = checked !== undefined ? !!checked : (existing.checked ? !!existing.checked : false);
 
-    const updated = await this.repo.updateItem({ id: itemId, list_id: listId, product_name: product_name ?? existing.product_name, quantity: q, unit_price: price, checked: checkedVal });
+    const updated = await this.repo.updateItem({ id: itemId, list_id: listId, product_name: product_name ?? existing.product_name, quantity: q, unit_price: price, checked: checkedVal, category_id: category_id ?? existing.category_id });
     if (!updated) throw new Error('Failed to update item');
-    return { id: itemId, productName: updated.product_name, quantity: q, unitPrice: price, subtotal: Number((q * price).toFixed(2)), checked: checkedVal };
+    const fresh = await this.repo.getItemById(itemId);
+    return { id: itemId, productName: fresh.product_name, quantity: q, unitPrice: price, subtotal: Number((q * price).toFixed(2)), checked: checkedVal, categoryId: fresh.category_id || null, categoryName: fresh.category_name || null, createdAt: fresh.created_at || existing.created_at || null };
   }
 
   async deleteItem({ userId, listId, itemId }) {
@@ -118,7 +120,10 @@ export class ListService {
       quantity: Number(it.quantity),
       unitPrice: Number(it.unit_price),
       subtotal: Number((Number(it.quantity) * Number(it.unit_price || 0)).toFixed(2)),
-      checked: !!it.checked
+      checked: !!it.checked,
+      createdAt: it.created_at || null,
+      categoryId: it.category_id || null,
+      categoryName: it.category_name || null
     }));
     const total = mappedItems.reduce((acc, it) => acc + (Number(it.quantity) * Number(it.unit_price || 0)), 0);
     return { id: list.id, name: list.name, user_id: list.user_id, created_at: list.created_at, items: mappedItems, total: Number(total.toFixed(2)), has_price: !!list.has_price };
@@ -136,7 +141,10 @@ export class ListService {
       quantity: Number(it.quantity),
       unitPrice: Number(it.unit_price),
       subtotal: Number((Number(it.quantity) * Number(it.unit_price || 0)).toFixed(2)),
-      checked: !!it.checked
+      checked: !!it.checked,
+      createdAt: it.created_at || null,
+      categoryId: it.category_id || null,
+      categoryName: it.category_name || null
     }));
   }
 
