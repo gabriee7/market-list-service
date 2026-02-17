@@ -1,5 +1,5 @@
 const listPaths = {
-  '/api/lists': {
+  '/venda/api/lists': {
     post: {
       tags: ['Lists'],
       summary: 'Create a shopping list',
@@ -26,7 +26,7 @@ const listPaths = {
       }
     }
   },
-  '/api/lists/{id}/items': {
+  '/venda/api/lists/{id}/items': {
     parameters: [ { name: 'id', in: 'path', required: true, schema: { type: 'string' }, description: 'List UUID' } ],
     post: {
       tags: ['Lists'],
@@ -47,7 +47,7 @@ const listPaths = {
     }
   }
   ,
-  '/api/lists/{id}/items': {
+  '/venda/api/lists/{id}/items': {
     parameters: [ { name: 'id', in: 'path', required: true, schema: { type: 'string' }, description: 'List UUID' } ],
     get: {
       tags: ['Lists'],
@@ -88,7 +88,7 @@ const listPaths = {
     }
   }
   ,
-  '/api/lists/{id}': {
+  '/venda/api/lists/{id}': {
     parameters: [ { name: 'id', in: 'path', required: true, schema: { type: 'string' }, description: 'List UUID' } ],
     put: {
       tags: ['Lists'],

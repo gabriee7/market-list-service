@@ -1,5 +1,5 @@
 const categoryPaths = {
-  '/api/categories': {
+  '/venda/api/categories': {
     post: {
       tags: ['Categories'],
       summary: 'Create a category',
@@ -21,7 +21,7 @@ const categoryPaths = {
       }
     }
   },
-  '/api/categories/{id}': {
+  '/venda/api/categories/{id}': {
     parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' }, description: 'Category UUID' }],
     get: {
       tags: ['Categories'],
