@@ -58,7 +58,9 @@ const schemas = {
       userId: { type: 'string', format: 'uuid' },
       createdAt: { type: 'string', format: 'date-time' },
       items: { type: 'array', items: { $ref: '#/components/schemas/ItemResponse' } },
-      total: { type: 'number', format: 'double' }
+      total: { type: 'number', format: 'double' },
+      itemCount: { type: 'integer', example: 0 },
+      totalValue: { type: 'number', format: 'double' }
     }
   }
 };

@@ -2,10 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import routes from '#routes/index.js';
-import listRoutes from '#routes/listRoutes.js';
 import errorHandler from '#middlewares/errorHandler.js';
-import swaggerUi from 'swagger-ui-express';
-import openapiSpec from '#docs/openapi.js';
 import runInitSql from '#config/initDb.js';
 
 const app = express();
@@ -15,10 +12,6 @@ const PORT = process.env.PORT || 3000;
 
 // Rotas agrupadas
 app.use(routes);
-app.use('/api/lists', listRoutes);
-
-// Swagger UI
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec));
 
 // Middleware
 app.use(errorHandler);
