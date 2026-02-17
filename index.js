@@ -11,7 +11,8 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 // Rotas agrupadas
-app.use(routes);
+const basePath = process.env.BASE_PATH || '/';
+app.use(basePath, routes);
 
 // Middleware
 app.use(errorHandler);
