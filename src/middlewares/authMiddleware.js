@@ -11,7 +11,7 @@ export default async function authMiddleware(req, res, next) {
       'AUTH_SERVICE_URL not configured; token verification must be performed by the auth microservice',
       500
     );
-  const verifyPath = '/api/auth/verify';
+  const verifyPath = '/auth/api/auth/verify';
   let verifyUrl;
   try {
     const baseUrl = new URL(authServiceBase);
